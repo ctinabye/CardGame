@@ -2,6 +2,7 @@ package edu.ntnu.idi.idatt2003.cardgame.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Represents a deck of cards.
@@ -34,7 +35,12 @@ public class DeckOfCards {
     return cards;
   }
 
+  public List<> dealHand(int n) {
+    if (cards.isEmpty() || n < 1 && n > 52) {
+      throw new IllegalArgumentException("cards must be between 1 and 52");
+    }
 
+  }
 
 
 
