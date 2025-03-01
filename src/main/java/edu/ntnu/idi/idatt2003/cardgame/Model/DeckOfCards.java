@@ -25,6 +25,17 @@ public class DeckOfCards {
     }
   }
 
+  /**
+   * Accessor method for cards.
+   *
+   * @return the list of cards
+   */
+  public List<PlayingCard> getCards() {
+    return cards;
+  }
+
+
+
 
 
 }
