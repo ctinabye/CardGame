@@ -1,7 +1,7 @@
 package edu.ntnu.idi.idatt2003.cardgame;
 
-import edu.ntnu.idi.idatt2003.cardgame.Model.DeckOfCards;
-import edu.ntnu.idi.idatt2003.cardgame.Model.PlayingCard;
+import edu.ntnu.idi.idatt2003.cardgame.model.DeckOfCards;
+import edu.ntnu.idi.idatt2003.cardgame.model.PlayingCard;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
