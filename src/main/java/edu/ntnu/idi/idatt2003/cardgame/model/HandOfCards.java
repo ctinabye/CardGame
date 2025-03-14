@@ -56,11 +56,25 @@ public class HandOfCards {
     cards.clear();
   }
 
-   /**
-    * Returns the hand of cards into a string showing the suit and face of each card on hand.
-    *
-    * @return hand of cards
-    */
+    /**
+     * Checks if the hand of cards has flush (5 cards of equal suit) on hand.
+     *
+     * @return true or false
+     */
+  public boolean hasFlush() {
+      return cards.stream()
+              .collect(Collectors.groupingBy(PlayingCard::getSuit))
+              .values()
+              .stream()
+              .anyMatch(group ->  group.size() >= 5);
+
+  }
+
+  /**
+   * Returns the hand of cards into a string showing the suit and face of each card on hand.
+   *
+   * @return hand of cards
+   */
   @Override
   public String toString() {
       return cards.stream()
