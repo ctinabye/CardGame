@@ -1,8 +1,8 @@
 package edu.ntnu.idi.idatt2003.cardgame.view;
 
+import edu.ntnu.idi.idatt2003.cardgame.controller.CardGameController;
+import edu.ntnu.idi.idatt2003.cardgame.model.DeckOfCards;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,7 +14,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class CardGameApp extends Application implements EventHandler<ActionEvent> {
+public class CardGameApp extends Application {
+
+    private CardGameController controller;
 
     public static void main(String[] args) {
         launch(args);
@@ -24,9 +26,21 @@ public class CardGameApp extends Application implements EventHandler<ActionEvent
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Card game");
 
+        // Create view components
+        Label handDisplay = createCenterDisplay();
+        TextArea flushDisplay = createNonEditableTextArea("", 111, 35);
+        TextArea queenDisplay = createNonEditableTextArea("", 111, 35);
+        TextArea sumDisplay = createNonEditableTextArea("", 111, 35);
+        TextArea heartsDisplay = createNonEditableTextArea("", 111, 35);
+
+        // Instantiate the controller
+        DeckOfCards deck = new DeckOfCards();
+        controller = new CardGameController(deck, handDisplay, flushDisplay, queenDisplay, sumDisplay, heartsDisplay);
+
+        // Set up the layout
         BorderPane layout = new BorderPane();
-        layout.setCenter(createCenterDisplay());
-        layout.setBottom(createBottomLayout());
+        layout.setCenter(handDisplay);
+        layout.setBottom(createBottomLayout(flushDisplay, queenDisplay, sumDisplay, heartsDisplay));
 
         Scene scene = new Scene(layout, 1280, 720);
         primaryStage.setScene(scene);
@@ -39,10 +53,9 @@ public class CardGameApp extends Application implements EventHandler<ActionEvent
         return handDisplay;
     }
 
-
-    private VBox createBottomLayout() {
+    private VBox createBottomLayout(TextArea flushDisplay, TextArea queenDisplay, TextArea sumDisplay, TextArea heartsDisplay) {
         VBox bottomLayout = new VBox();
-        bottomLayout.getChildren().addAll(createValueDisplay(), createButtonDisplay());
+        bottomLayout.getChildren().addAll(createValueDisplay(flushDisplay, queenDisplay, sumDisplay, heartsDisplay), createButtonDisplay());
         return bottomLayout;
     }
 
@@ -52,24 +65,24 @@ public class CardGameApp extends Application implements EventHandler<ActionEvent
         dealHandButton.setPrefSize(200, 100);
         checkHandButton.setPrefSize(200, 100);
 
-       // event handlers
-        dealHandButton.setOnAction(this);
-        checkHandButton.setOnAction(this);
-
         HBox buttonDisplay = new HBox();
         buttonDisplay.setAlignment(Pos.CENTER);
         buttonDisplay.setSpacing(400);
         buttonDisplay.setPadding(new Insets(30, 30, 30, 30));
         buttonDisplay.getChildren().addAll(dealHandButton, checkHandButton);
 
+        // Set event handlers
+        dealHandButton.setOnAction(e -> controller.dealHandAction());
+        checkHandButton.setOnAction(e -> controller.checkHandAction());
+
         return buttonDisplay;
     }
 
-    private HBox createValueDisplay() {
-        VBox flushBox = createLabeledTextArea("Flush", "", 111, 35);
-        VBox queenBox = createLabeledTextArea("Queen of spades", "", 111, 35);
-        VBox sumBox = createLabeledTextArea("Sum of faces", "", 111, 35);
-        VBox heartsBox = createLabeledTextArea("Cards of hearts", "", 111, 35);
+    private HBox createValueDisplay(TextArea flushDisplay, TextArea queenDisplay, TextArea sumDisplay, TextArea heartsDisplay) {
+        VBox flushBox = createLabeledTextArea("Flush", flushDisplay);
+        VBox queenBox = createLabeledTextArea("Queen of spades", queenDisplay);
+        VBox sumBox = createLabeledTextArea("Sum of faces", sumDisplay);
+        VBox heartsBox = createLabeledTextArea("Cards of hearts", heartsDisplay);
 
         HBox valueDisplay = new HBox();
         valueDisplay.setAlignment(Pos.CENTER);
@@ -80,29 +93,20 @@ public class CardGameApp extends Application implements EventHandler<ActionEvent
         return valueDisplay;
     }
 
-    private VBox createLabeledTextArea(String title, String initialText, double width, double height) {
-        TextArea textArea = new TextArea(initialText);
-        textArea.setPrefSize(width, height);
-        textArea.setEditable(false);
+    private VBox createLabeledTextArea(String title, TextArea textArea) {
         Label label = new Label(title);
 
-        VBox container = new VBox(5); // 5 piksler mellomrom
+        VBox container = new VBox(5);
         container.setAlignment(Pos.CENTER);
         container.getChildren().addAll(textArea, label);
 
         return container;
     }
 
-
     private TextArea createNonEditableTextArea(String text, double width, double height) {
         TextArea textArea = new TextArea(text);
         textArea.setPrefSize(width, height);
         textArea.setEditable(false);
         return textArea;
-    }
-
-    @Override
-    public void handle(ActionEvent actionEvent) {
-        // Her kan du håndtere knappetrykkene, f.eks. oppdatere visningen med nye kort
     }
 }
