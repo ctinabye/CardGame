@@ -71,10 +71,21 @@ public class HandOfCards {
 
   }
 
-  public int sumFaces() {
-    return cards.stream()
+  public String sumFaces() {
+    int sum = cards.stream()
             .mapToInt(PlayingCard:: getFace)
             .sum();
+    return Integer.toString(sum);
+
+  }
+
+  public String showHearts() {
+    String hearts = cards.stream()
+            .filter(card -> card.getSuit() == 'H')
+            .map(PlayingCard::getAsString)
+            .collect(Collectors.joining(" "));
+
+    return hearts.isEmpty() ? "No hearts" : hearts;
   }
 
   /**
