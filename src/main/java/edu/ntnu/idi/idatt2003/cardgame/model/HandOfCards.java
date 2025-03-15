@@ -13,8 +13,8 @@ public class HandOfCards {
   /**
    * Constructs an empty hand of cards.
    */
-  public HandOfCards() {
-    this.cards = new ArrayList<>();
+  public HandOfCards(List<PlayingCard> cards) {
+    this.cards = cards;
   }
 
   /**
