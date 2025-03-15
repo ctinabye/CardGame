@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 /**
  * Represents a hand of cards.
  */
@@ -70,6 +71,12 @@ public class HandOfCards {
 
   }
 
+  public int sumFaces() {
+    return cards.stream()
+            .mapToInt(PlayingCard:: getFace)
+            .sum();
+  }
+
   /**
    * Returns the hand of cards into a string showing the suit and face of each card on hand.
    *
@@ -81,6 +88,7 @@ public class HandOfCards {
               .map(PlayingCard::getAsString)
               .collect(Collectors.joining(" "));
   }
+
 
 
 

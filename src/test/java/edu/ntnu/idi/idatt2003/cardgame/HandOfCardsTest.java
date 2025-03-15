@@ -3,6 +3,8 @@ package edu.ntnu.idi.idatt2003.cardgame;
 import edu.ntnu.idi.idatt2003.cardgame.model.HandOfCards;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 import java.util.List;
 import edu.ntnu.idi.idatt2003.cardgame.model.PlayingCard;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +21,8 @@ class HandOfCardsTest {
 
     @BeforeEach
     void setUp() {
-        hand = new HandOfCards();
+        List<PlayingCard> hand1 = new ArrayList<>();
+        hand = new HandOfCards(hand1);
 
         card1 = new PlayingCard('H', 2); // Hearts
         card2 = new PlayingCard('H', 3);
