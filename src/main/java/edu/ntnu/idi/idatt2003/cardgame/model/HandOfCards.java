@@ -71,6 +71,11 @@ public class HandOfCards {
 
   }
 
+  /**
+   * Sums the faces in hand.
+   *
+   * @return the sum of faces as a string
+   */
   public String sumFaces() {
     int sum = cards.stream()
             .mapToInt(PlayingCard:: getFace)
@@ -79,6 +84,11 @@ public class HandOfCards {
 
   }
 
+  /**
+   * Shows the hearts on hand as a string.
+   *
+   * @return the hearts on hand, and returns "No hearts" if there are none
+   */
   public String showHearts() {
     String hearts = cards.stream()
             .filter(card -> card.getSuit() == 'H')
@@ -87,6 +97,18 @@ public class HandOfCards {
 
     return hearts.isEmpty() ? "No hearts" : hearts;
   }
+
+  /**
+   * Checks if there is a queen of spades on hand.
+   *
+   * @return true or false
+   */
+  public boolean queenOfSpadesInHand() {
+    return cards.stream()
+            .anyMatch(card -> card.getSuit() == 'S' && card.getFace() == 12);
+  }
+
+
 
   /**
    * Returns the hand of cards into a string showing the suit and face of each card on hand.
